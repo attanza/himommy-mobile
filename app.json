@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "Hi Mommy",
+    "slug": "himommy",
+    "privacy": "public",
+    "sdkVersion": "36.0.0",
+    "platforms": ["ios", "android", "web"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.himommyorg.himommyapp"
+    },
+    "android": {
+      "package": "com.himommyorg.himommyapp",
+      "googleServicesFile": "./google-services.json"
+    },
+    "facebookAppId": "2421437104811738",
+    "facebookScheme": "fb2421437104811738",
+    "facebookDisplayName": "HiMommy",
+    "scheme": "com.himommyorg.himommyapp",
+    "extra": {
+      "googleAppId": {
+        "ios": "486304065395-7p2glb1h5m454iag8jvnq8uc2o7jlluj.apps.googleusercontent.com",
+        "android": "486304065395-uuhh8u9g1fahnr85pp0snd7fk7uj82tp.apps.googleusercontent.com",
+        "androidStandaloneAppClientId": "AIzaSyACsDE1TqDFicJJwcH3ilyvGnLtfZRDFXQ"
+      }
+    }
+  }
+}
