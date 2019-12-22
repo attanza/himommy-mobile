@@ -1,101 +1,86 @@
+import { Provider } from "mobx-react";
 import React from "react";
-import { NativeRouter, Route, Switch, BackButton } from "react-router-native";
 import FlashMessage from "react-native-flash-message";
+import { BackButton, NativeRouter, Route, Switch } from "react-router-native";
 import Loader from "./components/commons/Loader";
 import Mqtt from "./components/commons/Mqtt";
 import {
-  SplashScreen,
+  AuthContextProvider,
+  MqttContextProvider,
+  RegisterContextProvider,
+  TocologistContextProvider
+} from "./contexts";
+import {
+  LandingScreen,
   LoginRegisterScreen,
   LoginScreen,
-  LandingScreen,
   RegisterOneScreen,
-  RegisterTwoScreen,
   RegisterThreeScreen,
-  UserHomeScreen,
-  UserProfileScreen,
+  RegisterTwoScreen,
+  ReservationScreen,
+  SplashScreen,
   TocologistDetailScreen,
   TocologistsScreen,
-  ReservationScreen
+  UserHomeScreen,
+  UserProfileScreen
 } from "./screens";
-
-import {
-  RegisterContextProvider,
-  AuthContextProvider,
-  TocologistContextProvider,
-  MqttContextProvider
-} from "./contexts";
-
+import store from "./store";
+import catchError from "./helpers/catchError";
+global.catchError = catchError;
 const Router = () => {
   return (
-    <>
-      <AuthContextProvider>
-        <RegisterContextProvider>
-          <TocologistContextProvider>
-            <MqttContextProvider>
-              <Mqtt>
-                <Loader></Loader>
-                <NativeRouter>
-                  <BackButton>
-                    <Switch>
-                      <Route exact path="/" component={SplashScreen} />
-                      <Route exact path="/landing" component={LandingScreen} />
+    <Provider store={store}>
+      <Loader></Loader>
+      <NativeRouter>
+        <BackButton>
+          <Switch>
+            <Route exact path="/" component={SplashScreen} />
+            <Route exact path="/landing" component={LandingScreen} />
 
-                      <Route
-                        exact
-                        path="/auth/loginRegister"
-                        component={LoginRegisterScreen}
-                      />
-                      <Route exact path="/auth/login" component={LoginScreen} />
+            <Route
+              exact
+              path="/auth/loginRegister"
+              component={LoginRegisterScreen}
+            />
+            <Route exact path="/auth/login" component={LoginScreen} />
 
-                      {/* REGISTER */}
-                      <Route
-                        exact
-                        path="/register/one"
-                        component={RegisterOneScreen}
-                      />
-                      <Route
-                        exact
-                        path="/register/two"
-                        component={RegisterTwoScreen}
-                      />
-                      <Route
-                        exact
-                        path="/register/three"
-                        component={RegisterThreeScreen}
-                      />
+            {/* REGISTER */}
+            <Route exact path="/register/one" component={RegisterOneScreen} />
+            <Route exact path="/register/two" component={RegisterTwoScreen} />
+            <Route
+              exact
+              path="/register/three"
+              component={RegisterThreeScreen}
+            />
 
-                      {/* USER */}
-                      <Route exact path="/user" component={UserHomeScreen} />
-                      <Route
-                        exact
-                        path="/user/profile"
-                        component={UserProfileScreen}
-                      />
-                      <Route
-                        exact
-                        path="/user/tocologists"
-                        component={TocologistsScreen}
-                      />
-                      <Route
-                        exact
-                        path="/user/tocologists/:id"
-                        component={TocologistDetailScreen}
-                      />
-                      <Route
-                        exact
-                        path="/user/tocologists/:id/reservation"
-                        component={ReservationScreen}
-                      />
-                    </Switch>
-                  </BackButton>
-                </NativeRouter>
-              </Mqtt>
-            </MqttContextProvider>
-          </TocologistContextProvider>
-        </RegisterContextProvider>
-      </AuthContextProvider>
-      <FlashMessage position="center" duration={3000} />
-    </>
+            {/* USER */}
+            <Route exact path="/user" component={UserHomeScreen} />
+            <Route exact path="/user/profile" component={UserProfileScreen} />
+            <Route
+              exact
+              path="/user/tocologists"
+              component={TocologistsScreen}
+            />
+            <Route
+              exact
+              path="/user/tocologists/:id"
+              component={TocologistDetailScreen}
+            />
+            <Route
+              exact
+              path="/user/tocologists/:id/reservation"
+              component={ReservationScreen}
+            />
+          </Switch>
+        </BackButton>
+      </NativeRouter>
+
+      <FlashMessage
+        position="center"
+        duration={3000}
+        style={{ textAlign: "center" }}
+      />
+    </Provider>
   );
 };
 

@@ -1,17 +1,13 @@
-import PropTypes from "prop-types";
-import React, { useContext } from "react";
+import { inject, observer } from "mobx-react";
+import React from "react";
+import { ActivityIndicator } from "react-native";
 import { Box, Text } from "react-native-design-utility";
 import Modal from "react-native-modal";
 import { SvgXml } from "react-native-svg";
-import { greenCheck } from "../../utils/svgs";
-import { theme } from "../../utils/theme";
-import RoundButton from "./RoundButton";
-import { AuthContext } from "../../contexts/authContext";
 import { babyPop } from "../../utils/svgs";
-import { ActivityIndicator } from "react-native";
+import { theme } from "../../utils/theme";
 
-const Loader = () => {
-  const { loading, showLoader } = useContext(AuthContext);
+const Loader = ({ store: { loader } }) => {
   const _renderModalContent = () => (
     <Box bg="white" self="center" radius="base" p="md">
       <Box center>
@@ -33,11 +29,11 @@ const Loader = () => {
 
   return (
     <>
-      <Modal isVisible={loading} useNativeDriver={true}>
+      <Modal isVisible={loader} useNativeDriver={true}>
         {_renderModalContent()}
       </Modal>
     </>
   );
 };
 
-export default Loader;
+export default inject("store")(observer(Loader));

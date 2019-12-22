@@ -5,9 +5,9 @@ import { Box } from "react-native-design-utility";
 import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import RoundButton from "../../components/commons/RoundButton";
-import { RegisterContext } from "../../contexts/registerContext";
 import { theme } from "../../utils/theme";
 import InputText from "../commons/form/InputText";
+import { inject, observer } from "mobx-react";
 
 const validationSchema = yup.object().shape({
   firstName: yup
@@ -22,9 +22,11 @@ const validationSchema = yup.object().shape({
 const leadingIcon = () => (
   <AntDesign name="user" size={32} color={theme.color.purple}></AntDesign>
 );
-const RegisterOneForm = () => {
+const RegisterOneForm = props => {
   const history = useHistory();
-  const { setRegisterData } = useContext(RegisterContext);
+  const {
+    store: { setRegisterData }
+  } = props;
   return (
     <Box f={1}>
       <Formik
@@ -72,4 +74,4 @@ const RegisterOneForm = () => {
   );
 };
 
-export default RegisterOneForm;
+export default inject("store")(observer(RegisterOneForm));

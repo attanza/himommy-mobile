@@ -1,8 +1,8 @@
 import { removeToken } from "./tokenHelper";
 import { showMessage } from "react-native-flash-message";
 
-export default async error => {
-  console.log("error", error);
+const catchError = async (error, store) => {
+  const { showLoader } = store;
   const status =
     error.response && error.response.status ? error.response.status : null;
   let message = "Unknown error, please contact administrator";
@@ -18,4 +18,7 @@ export default async error => {
     message,
     type: "danger"
   });
+  showLoader(false);
 };
+
+export default catchError;

@@ -53,7 +53,6 @@ const Mqtt = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log("isOpenConnection", isOpenConnection);
     if (!isOpenConnection) {
       console.log("MQTT connection closed");
     } else {

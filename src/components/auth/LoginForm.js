@@ -1,12 +1,11 @@
 import { AntDesign } from "@expo/vector-icons";
 import { Formik } from "formik";
-import React, { useContext } from "react";
+import { inject, observer } from "mobx-react";
+import React from "react";
 import { Box } from "react-native-design-utility";
 import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import AuthApi from "../../apis/AuthApi";
-import { AuthContext } from "../../contexts/authContext";
-import catchError from "../../helpers/catchError";
 import checkUserRole from "../../helpers/checkUserRole";
 import { theme } from "../../utils/theme";
 import InputPassword from "../commons/form/InputPassword";
@@ -22,24 +21,29 @@ const userIcon = () => (
   <AntDesign name="user" size={32} color={theme.color.red}></AntDesign>
 );
 
-const LoginForm = () => {
-  const context = useContext(AuthContext);
+const LoginForm = props => {
+  const {
+    store: { showLoader, setUser, showMessage }
+  } = props;
   const history = useHistory();
 
   const handleSubmit = async values => {
     try {
-      context.showLoader(true);
+      showLoader(true);
       await AuthApi.login({
         uid: values.uid,
         password: values.password
       });
       const user = await AuthApi.getMe();
-      context.setUser(user);
-      context.showLoader(false);
+      setUser(user);
+      showLoader(false);
       await checkUserRole(user, history);
     } catch (e) {
-      context.showLoader(false);
-      catchError(e);
+      showLoader(false);
+      showMessage({
+        type: "danger",
+        text: "Login gagal, periksa kembali kredensial anda."
+      });
     }
   };
 
@@ -87,4 +91,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default inject("store")(observer(LoginForm));

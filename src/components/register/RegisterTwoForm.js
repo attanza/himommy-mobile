@@ -8,6 +8,7 @@ import { RegisterContext } from "../../contexts/registerContext";
 import { theme } from "../../utils/theme";
 import InputText from "../commons/form/InputText";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
+import { inject, observer } from "mobx-react";
 
 const validationSchema = yup.object().shape({
   phone: yup
@@ -32,9 +33,11 @@ const mailIcon = () => (
   <AntDesign name="mail" size={32} color={theme.color.purple}></AntDesign>
 );
 
-const RegisterTwoForm = () => {
+const RegisterTwoForm = props => {
   const history = useHistory();
-  const { setRegisterData } = useContext(RegisterContext);
+  const {
+    store: { setRegisterData }
+  } = props;
   return (
     <Formik
       initialValues={{ phone: "078987923", email: "richard@gmail.com" }}
@@ -84,4 +87,4 @@ const RegisterTwoForm = () => {
   );
 };
 
-export default RegisterTwoForm;
+export default inject("store")(observer(RegisterTwoForm));

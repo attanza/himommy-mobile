@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Box, Text } from "react-native-design-utility";
-import Appbar from "../../components/commons/Appbar";
+import React from "react";
 import { ImageBackground } from "react-native";
-import CustomKeyboardAvoidingView from "../../components/commons/CustomKeyboardAvoidingView";
-import { hiMommyPurple } from "../../utils/svgs";
+import { Box } from "react-native-design-utility";
 import { SvgXml } from "react-native-svg";
+import Appbar from "../../components/commons/Appbar";
+import CustomKeyboardAvoidingView from "../../components/commons/CustomKeyboardAvoidingView";
 import RegisterOneForm from "../../components/register/RegisterOneForm";
-
 import { images } from "../../utils/images";
+import { hiMommyPurple } from "../../utils/svgs";
+
 const RegisterOne = () => {
-  useEffect(() => {}, []);
   return (
     <ImageBackground
       source={images.vector1}
